@@ -5,10 +5,11 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.websocket.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
 fun main() {
-    WebSocketClient(mutableListOf(WsEndpoint("stream.binance.com", 9443, "ws/btcusdt@depth"))).start()
+    WebSocketClient(mutableListOf(WsEndpoint("stream.binance.com", 9443, "ws/btcusdt@trade", 3000))).start()
 }
 
 
@@ -21,8 +22,13 @@ class WebSocketClient(private val endpoints: MutableList<WsEndpoint>) {
             endpoints.forEach {
                 with(it){
                     val block: suspend DefaultClientWebSocketSession.() -> Unit = {
+                        var lastResponse = 0L
                         while (true){
-                            println((incoming.receive() as Frame.Text).readText())
+                            val frame = incoming.receive() as Frame.Text
+                            if (System.currentTimeMillis() - timeInterval > lastResponse) {
+                                println(frame.readText())
+                                lastResponse = System.currentTimeMillis()
+                            }
                         }
                         
                     }
