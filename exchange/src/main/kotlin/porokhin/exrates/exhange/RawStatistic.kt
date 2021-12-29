@@ -1,7 +1,6 @@
 package porokhin.exrates.exhange
 
 import java.util.*
-import kotlin.Comparator
 
 class RawStatistic {
     val trades: Map<CurrencyPair, List<String>> = mutableMapOf()
@@ -18,6 +17,8 @@ class RawStatistic {
             else p1.first - p2.first
         }
     }
+
+
     private fun String.extractPeriod(): Pair<Int, String>{
         val regex = """(\d{1,2})(\w)""".toRegex()
         val values = regex.matchEntire(this)!!.groupValues
