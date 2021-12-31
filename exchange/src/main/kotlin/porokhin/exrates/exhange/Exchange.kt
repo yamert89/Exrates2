@@ -9,6 +9,8 @@ interface Exchange<T:EndPoints> {
 data class CurrencyPair(val symbol: String)
 
 interface EndPoints{
-    val host: String
+    val wsHost: String
+    val httpHost: String
     val port: Int
+    val infoEndpoint: String
 }
