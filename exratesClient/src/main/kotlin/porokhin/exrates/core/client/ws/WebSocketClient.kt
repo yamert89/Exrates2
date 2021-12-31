@@ -8,13 +8,12 @@ import io.ktor.http.cio.websocket.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
-fun main() {
-    WebSocketClient(mutableListOf(WsEndpoint("stream.binance.com", 9443, "ws/btcusdt@trade", 3000))).start()
-}
+object WebSocketClient {
+    private val endpoints: MutableList<WsEndpoint> = mutableListOf()
+    init {
 
-
-class WebSocketClient(private val endpoints: MutableList<WsEndpoint>) {
-    fun start(){
+    }
+    suspend fun run(){
         val client = HttpClient(CIO) {
             install(WebSockets)
         }
@@ -37,25 +36,14 @@ class WebSocketClient(private val endpoints: MutableList<WsEndpoint>) {
                     else client.webSocket(method, host, port, path, block = block)
                 }
             }
-
-
-
-
-            /*client.webSocket(method = HttpMethod.Get, host = "wss://stream.binance.com", port = 9443, path = "/ws/btcusdt@depth" ){
-                *//*while (true){
-                    try {
-                        val frame = incoming.receive() as Frame.Text
-                        println(frame.readText())
-                    }catch (e: Exception){
-                        e.printStackTrace()
-                    }
-                }*//*
-            }*/
         }
         client.close()
     }
 
-    fun addEndpoint(endpoint: WsEndpoint) = endpoints.add(endpoint)
+    fun addEndpoints(vararg endpoint: WsEndpoint) {
+
+        endpoints.addAll(endpoint)
+    }
     fun removeEndpoint(host: String) = endpoints.removeIf { it.host == host }
 
 }
