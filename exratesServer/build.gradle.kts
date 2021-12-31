@@ -20,4 +20,8 @@ dependencies {
     implementation("io.ktor:ktor-serialization:$ktor_version")
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+
+    implementation(project(":binance"))
+    implementation(project(":exchange"))
+    implementation(project(":exratesClient"))
 }
