@@ -14,13 +14,14 @@ object Binance : Exchange<BinanceEndpoints>{
 }
 
 class BinanceEndpoints: EndPoints{
-    override val wsHost = "stream.binance.com"
+    override val wsHost = "stream.binance.com/"
     override val httpHost = "https://api.binance.com"
     override val port = 9443
     override val infoEndpoint = "$httpHost/api/v3/exchangeInfo"
-    fun trades(symbol: String) = "$symbol@trade"
-    fun ticker(symbol: String) = "$symbol@ticker"
-    fun kLine(symbol: String, interval: String) = "$symbol@kline_$interval"
+    private val rawSuffix = "ws/"
+    fun trades(symbol: String) = "$rawSuffix$symbol@trade"
+    fun ticker(symbol: String) = "$rawSuffix$symbol@ticker"
+    fun kLine(symbol: String, interval: String) = "$rawSuffix$symbol@kline_$interval"
 }
 
 /*
