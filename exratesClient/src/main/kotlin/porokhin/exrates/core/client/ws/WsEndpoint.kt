@@ -8,5 +8,6 @@ class WsEndpoint(
     val path: String = "/",
     val timeInterval: Long = 0,
     val method: HttpMethod = HttpMethod.Get,
-    val security: Boolean = true) {
+    val security: Boolean = true,
+    val block: (response: String) -> Unit) {
 }
