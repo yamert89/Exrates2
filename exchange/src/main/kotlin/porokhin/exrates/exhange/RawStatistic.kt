@@ -3,8 +3,8 @@ package porokhin.exrates.exhange
 import java.util.*
 
 class RawStatistic {
-    val trades: Map<CurrencyPair, List<String>> = mutableMapOf()
-    val ticker: Map<CurrencyPair, String> = mutableMapOf()
+    val trades: MutableMap<CurrencyPair, ArrayDeque<String>> = mutableMapOf()
+    val ticker: MutableMap<CurrencyPair, String> = mutableMapOf()
     val kLine: SortedMap<String, String> = TreeMap{o1, o2 ->
         if (o1 == o2) 0
         else {
