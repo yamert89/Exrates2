@@ -6,6 +6,7 @@ object AppPreferences {
     private val logger = LoggerFactory.getLogger(this::class.java)
     const val ticker = 3600000L
     const val tradesPeriod = 5000L
+    const val tradesInitCapacity = 30
     private const val kLine1mPeriod = 60000L
     private var kLineStartCoefficient = 0.5f
     val kLinePeriods = mapOf<String, Long>(
